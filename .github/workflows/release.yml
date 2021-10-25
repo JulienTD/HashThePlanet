@@ -1,0 +1,27 @@
+name: Database Release
+on:
+  schedule:
+    - cron:  '0 0 * * *'
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Checkout main Branch
+        uses: actions/checkout@v2
+        with:
+          ref: 'main'
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: db-tag-${{ steps.date.outputs.date }}
+          release_name: db-release-${{ steps.date.outputs.date }}
+          draft: false
+          prerelease: false
