@@ -11,6 +11,7 @@ on:
     paths:
       - 'src/tech_list.csv'
 
+
 jobs:
   db-release:
     name: "Database Release"
@@ -44,6 +45,7 @@ jobs:
           title: "Database release: Latest"
           files: |
             dist/hashtheplanet.db
+
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
